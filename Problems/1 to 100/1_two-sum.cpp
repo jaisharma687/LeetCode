@@ -5,8 +5,8 @@ using namespace std;
 const int mod = 1e9+7;
 
 class Solution {
-    public:
-        vector<int> twoSum(vector<int>& nums, int target) {
+public:
+    vector<int> twoSum(vector<int>& nums, int target) {
         int l = nums.size();
         for(int i=0;i<l-1;i++){
             int temp = nums[i];
@@ -19,3 +19,9 @@ class Solution {
         return {};
     }
 };
+
+signed main(){
+    ios_base::sync_with_stdio(false);
+    cin.tie(0);cout.tie(0);
+    Solution obj;
+}
