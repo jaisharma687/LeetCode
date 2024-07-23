@@ -17,6 +17,22 @@ public:
     }
 };
 
+class Solution {
+public:
+    bool containsDuplicate(vector<int>& nums) {
+        unordered_map<int,int> m;
+        bool twice = false;
+        for(auto x : nums){
+            m[x]++;
+            if(m[x]==2){
+                twice = true;
+                break;
+            }
+        }
+        return twice;
+    }
+};
+
 signed main(){
     ios_base::sync_with_stdio(false);
     cin.tie(0);cout.tie(0);
