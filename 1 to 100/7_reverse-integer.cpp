@@ -7,16 +7,16 @@ const int mod = 1e9+7;
 class Solution {
 public:
     int reverse(int x) {
-        long y =0;
-        while(x != 0){
-            int r = x%10;
-            
-            y = y*10+r;
-            x = x/10;
+        if(x==0) return x;
+        bool neg = x < 0 ? true: false;
+        x = abs(x);
+        long rev = 0;
+        while(x>0){
+            rev = rev *10 + x % 10;
+            if(rev > INT_MAX) return 0;
+            x /= 10;
         }
-        if(y< -pow(2,31) || y > pow(2,31)-1)
-            return 0;
-        return y;
+        return neg ? -rev:rev;
     }
 };
 
