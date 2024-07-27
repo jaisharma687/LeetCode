@@ -7,18 +7,16 @@ const int mod = 1e9+7;
 class Solution {
 public:
     bool isPalindrome(int x) {
-        long y = 0;
-        long z = x;
-        while(x!=0){
-            int r = x %10;
-            y = y*10+r;
-            x = x/10;
+        if(x<0) return false;
+        if(x==0) return true;
+        int p = x;
+        long rev = 0;
+        while(p>0){
+            rev = rev *10 + p%10;
+            if(rev>INT_MAX) return false;
+            p/=10;
         }
-        if(z == y && z>=0){
-            return true;
-        }else{
-            return false;
-        }
+        return x==rev;
     }
 };
 
