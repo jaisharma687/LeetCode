@@ -22,7 +22,7 @@ public:
     }
 };
 
-// sliding window
+// sliding window or two pointer
 class Solution {
 public:
     int maxProfit(vector<int>& prices) {
