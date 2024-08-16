@@ -4,6 +4,7 @@ using namespace std;
 #define int long long
 const int mod = 1e9+7;
 
+// hashmap and sliding window
 class Solution {
 public:
     int lengthOfLongestSubstring(string s) {
@@ -18,6 +19,26 @@ public:
             maxlen = max(maxlen, i - start + 1);
         }
         return maxlen;
+    }
+};
+
+//set and sliding window
+class Solution {
+public:
+    int lengthOfLongestSubstring(string s) {
+        int n = s.size();
+        unordered_set<char> c;
+        int l = 0;
+        int res = 0;
+        for(int r=0;r<n;r++){
+            while(c.find(s[r])!=c.end()){
+                c.erase(s[l]);
+                l++;
+            }
+            c.insert(s[r]);
+            res = max(res,r-l+1);
+        }
+        return res;
     }
 };
 
