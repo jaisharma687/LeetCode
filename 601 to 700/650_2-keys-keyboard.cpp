@@ -4,6 +4,8 @@ using namespace std;
 #define int long long
 const int mod = 1e9+7;
 
+
+// observational approach
 class Solution {
 public:
     bool isPrime(int k){
@@ -29,6 +31,26 @@ public:
             k++;
         }
         return res;
+    }
+};
+
+// recursion and memorization
+class Solution {
+public:
+    int t[1001][1001];
+    int solve(int n, int cur, int clip){
+        if(cur == n) return 0 ;
+        if(cur>n) return 1100;
+        if(t[cur][clip]!=-1) return t[cur][clip];
+        int copypaste = 1 + 1 + solve(n,cur+cur,cur);
+        int paste = 1 + solve(n,cur+clip,clip);
+        return t[cur][clip]= min(paste,copypaste);
+        
+    }
+    int minSteps(int n) {
+        if(n==1) return 0;
+        memset(t,-1,sizeof(t));
+        return  1 + solve(n,1,1);
     }
 };
 
