@@ -54,6 +54,28 @@ public:
     }
 };
 
+
+// dp solution
+class Solution {
+public:
+    int minSteps(int n) {
+        if(n==1) return 0;
+        vector<int> dp(n+1);
+        dp[0]=dp[1]=0;
+        dp[2]=2;
+        for(int i=3;i<=n;i++){
+            int fac = i/2;
+            while(fac >= 1){
+                if(i%fac==0){
+                    dp[i] = dp[fac] + 1 + (i/fac - 1);
+                    break;
+                }else fac--;
+            }
+        }
+        return dp[n];
+    }
+};
+
 signed main(){
     ios_base::sync_with_stdio(false);
     cin.tie(0);cout.tie(0);
