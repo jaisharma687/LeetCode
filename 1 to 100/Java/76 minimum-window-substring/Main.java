@@ -31,7 +31,7 @@ class Solution {
     }
 }
 
-public class minimum_window_substring{
+public class Main{
     public static void main(String[] args) {
         Solution solution = new Solution();
         String s = "ADOBECODEBANC";
