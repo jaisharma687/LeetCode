@@ -1,7 +1,6 @@
 import java.util.*;
 
-public class Main{
-
+class Solution {
     //Definition for singly-linked list.
     public class ListNode {
         int val;
@@ -24,26 +23,25 @@ public class Main{
             this.right = right;
         }
     }
-
-    class Solution {
-        public boolean traverse(ListNode head, TreeNode root){
-            if(head==null) return true;
-            if(root==null) return false;
-            if(head.val == root.val){
-                if(traverse(head.next,root.left)) return true;
-                if(traverse(head.next,root.right)) return true;
-            }
-            return false;
+    public boolean traverse(ListNode head, TreeNode root){
+        if(head==null) return true;
+        if(root==null) return false;
+        if(head.val == root.val){
+            if(traverse(head.next,root.left)) return true;
+            if(traverse(head.next,root.right)) return true;
         }
-        public boolean isSubPath(ListNode head, TreeNode root) {
-            if(root==null) return false;
-            if(traverse(head,root)) return true;
-            if(isSubPath(head,root.left)) return true;
-            if(isSubPath(head,root.right)) return true;
-            return false;
-        }
+        return false;
     }
-    
+    public boolean isSubPath(ListNode head, TreeNode root) {
+        if(root==null) return false;
+        if(traverse(head,root)) return true;
+        if(isSubPath(head,root.left)) return true;
+        if(isSubPath(head,root.right)) return true;
+        return false;
+    }
+}
+
+public class Main{
     public static void main(String[] args) {
         Solution solution = new Solution();
     }
