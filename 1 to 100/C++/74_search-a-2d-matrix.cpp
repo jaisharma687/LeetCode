@@ -4,6 +4,7 @@ using namespace std;
 #define int long long
 const int mod = 1e9+7;
 
+// Brute Force
 class Solution {
 public:
     bool searchMatrix(vector<vector<int>>& matrix, int target) {
@@ -16,6 +17,29 @@ public:
             }
         }
         return found;
+    }
+};
+
+// Binary Search
+class Solution {
+public:
+    bool searchMatrix(vector<vector<int>>& matrix, int target) {
+        int m = matrix.size();
+        int n = matrix[0].size();
+        int row =0;
+        vector<int> arr(m,0);
+        for(int i=0;i<m;i++) arr[i]=matrix[i][n-1];
+        while(row<m && arr[row]<target) row++;
+        if(row==m) return false;
+        int l =0;
+        int r = n-1;
+        while(l<=r){
+            int mid = (l+r)/2;
+            if(matrix[row][mid]<target) l = mid+1;
+            else if(matrix[row][mid]>target) r = mid-1;
+            else return true;
+        }
+        return false;
     }
 };
 
