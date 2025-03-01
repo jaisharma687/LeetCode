@@ -40,6 +40,24 @@ public:
     }
 };
 
+// single pass
+class Solution {
+    public:
+        int maxProfit(vector<int>& prices) {
+            int n = prices.size();
+            int mx = prices[n-1];
+            int profit = 0;
+            for(int i=n-1;i>=0;i--){
+                if(prices[i]>mx){
+                    mx = prices[i];
+                }else{
+                    profit = max(profit,mx-prices[i]);
+                }
+            }
+            return profit;
+        }
+};
+
 signed main(){
     ios_base::sync_with_stdio(false);
     cin.tie(0);cout.tie(0);
