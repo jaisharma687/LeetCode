@@ -4,17 +4,17 @@ using namespace std;
 #define int long long
 const int mod = 1e9+7;
 
-/**
- * Definition for a binary tree node.
- * struct TreeNode {
- *     int val;
- *     TreeNode *left;
- *     TreeNode *right;
- *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
- *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
- *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
- * };
- */
+
+// Definition for a binary tree node.
+struct TreeNode {
+    int val;
+    TreeNode *left;
+    TreeNode *right;
+    TreeNode() : val(0), left(nullptr), right(nullptr) {}
+    TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+    TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
+};
+
 class Solution {
 public:
     void preorder(TreeNode* root, vector<int>& output){
@@ -29,6 +29,24 @@ public:
         return res;
     }
 };
+
+class Solution {
+    public:
+        vector<int> preorderTraversal(TreeNode* root) {
+            vector<int> preorder;
+            stack<TreeNode*> st;
+            if(root==NULL) return preorder;
+            st.push(root);
+            while(!st.empty()){
+                auto node = st.top();
+                st.pop();
+                if(node->right!=NULL) st.push(node->right);
+                if(node->left!=NULL) st.push(node->left);
+                preorder.push_back(node->val);
+            }
+            return preorder;
+        }
+    };
 
 signed main(){
     ios_base::sync_with_stdio(false);
