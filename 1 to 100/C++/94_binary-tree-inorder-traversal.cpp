@@ -53,6 +53,29 @@ class Solution {
         }
     };
 
+// Morris Traversal
+class Solution {
+public:
+    vector<int> inorderTraversal(TreeNode* root) {
+        vector<int> res;
+        TreeNode* curr = root;
+        while(curr!=nullptr){
+            if(curr->left==nullptr){
+                res.push_back(curr->val);
+                curr = curr->right;
+            }else{
+                TreeNode* lc = curr->left;
+                while(lc->right!=nullptr) lc = lc->right;
+                lc->right = curr;
+                TreeNode* temp = curr->left;
+                curr->left = nullptr;
+                curr = temp;
+            }
+        }
+        return res;
+    }
+};
+
 signed main(){
     ios_base::sync_with_stdio(false);
     cin.tie(0);cout.tie(0);

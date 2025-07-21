@@ -17,6 +17,26 @@ public:
     }
 };
 
+class Solution {
+public:
+    bool isPalindrome(string s) {
+        vector<char> p;
+        for(char x: s){
+            if((x>='A' && x<='Z')||(x>='a' && x<='z')||(x>='0' && x<='9')){
+                p.push_back(tolower(x));
+            }
+        }
+        int start = 0;
+        int end = p.size()-1;
+        while(start<end){
+            if(p[start]!=p[end]) return false;
+            start++;
+            end--;
+        }
+        return true;
+    }
+};
+
 signed main(){
     ios_base::sync_with_stdio(false);
     cin.tie(0);cout.tie(0);

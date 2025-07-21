@@ -17,6 +17,30 @@ public:
     }
 };
 
+class Solution {
+public:
+    int differenceOfSums(int n, int m) {
+        int totalSum = n*(n+1) / 2;
+        int divSum = 0;
+        for(int i=1;i<=n;i++){
+            if(i%m==0){
+                divSum += i;
+            }
+        }
+        return totalSum - 2 * divSum;
+    }
+};
+
+class Solution {
+public:
+    int differenceOfSums(int n, int m) {
+        int totalSum = n*(n+1) / 2;
+        int q = n/m; // no of numbers divisible by m till n
+        int divSum = (q*(q+1) / 2)*m; // sum of all the divisible numbers
+        return totalSum - 2 * divSum;
+    }
+};
+
 signed main(){
     ios_base::sync_with_stdio(false);
     cin.tie(0);cout.tie(0);

@@ -40,6 +40,19 @@ class Solution {
         }
     };
 
+class Solution {
+public:
+    int minDepth(TreeNode* root) {
+        if(root==nullptr) return 0;
+        if(!(root->left) && !(root->right)) return 1;
+        int lh = INT_MAX;
+        int rh = INT_MAX;
+        if(root->left)  lh = minDepth(root->left);
+        if(root->right) rh = minDepth(root->right);
+        return 1 + min(lh,rh);
+    }
+};
+
 signed main(){
     ios_base::sync_with_stdio(false);
     cin.tie(0);cout.tie(0);

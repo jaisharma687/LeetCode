@@ -46,7 +46,7 @@ public:
             if(temp->right != NULL){
                 q.push({temp->right,nxtlevel});
                 if(nxtlevel%2!=0){
-                     nodes.push_back(temp->right);
+                    nodes.push_back(temp->right);
                 }
             }
         }
@@ -54,6 +54,55 @@ public:
     TreeNode* reverseOddLevels(TreeNode* root) {
         int levels = 0;
         bfs(root);
+        return root;
+    }
+};
+
+class Solution {
+public:
+    TreeNode* reverseOddLevels(TreeNode* root) {
+        queue<TreeNode*> q;
+        q.push(root);
+        int level=0;
+        while(!q.empty()){
+            int size = q.size();
+            int l = 0;
+            int r = size-1;
+            vector<TreeNode*> nodes;
+            while(size--){
+                auto node = q.front();
+                q.pop();
+                if(level%2==1) nodes.emplace_back(node);
+                if(node->left) q.push(node->left);
+                if(node->right) q.push(node->right);
+            }
+            while(level%2==1 && l<r){
+                int temp = nodes[l]->val;
+                nodes[l]->val = nodes[r]->val;
+                nodes[r]->val = temp;
+                l++;
+                r--;
+            }
+            level++;
+        }
+        return root;
+    }
+};
+
+class Solution {
+public:
+    void solve(TreeNode* l, TreeNode* r, int level){
+        if(r==nullptr || l==nullptr) return;
+        if(level%2==1){
+            int val = l->val;
+            l->val = r->val;
+            r->val = val;
+        }
+        solve(l->left, r->right, level+1);
+        solve(l->right, r->left, level+1);
+    }
+    TreeNode* reverseOddLevels(TreeNode* root) {
+        solve(root->left, root->right, 1);
         return root;
     }
 };

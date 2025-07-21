@@ -47,6 +47,22 @@ public:
     }
 };
 
+class Solution {
+public:
+    vector<int> res;
+    void dfs(TreeNode* root, int level){
+        if(root==nullptr) return;   
+        if(res.size()==level) res.push_back(root->val);
+        else res[level] = max(res[level], root->val);
+        dfs(root->left, level+1);
+        dfs(root->right, level+1);
+    }
+    vector<int> largestValues(TreeNode* root) {
+        dfs(root, 0);
+        return res;
+    }
+};
+
 static const int KDS = []() {
     std::ios::sync_with_stdio(false);
     std::cin.tie(nullptr);

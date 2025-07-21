@@ -15,62 +15,43 @@ struct TreeNode {
 
 class Solution {
 public:
-    int countMinSwaps(vector<int> &arr){
-        int n = arr.size();
-        int swaps = 0;
-        vector<pair<int,int>> arrPos(n);
-        for(int i=0;i<n;i++){
-            arrPos[i].first = arr[i];
-            arrPos[i].second = i;
-        }
-        sort(arrPos.begin(),arrPos.end());
-        vector<bool> visited(n,false);
-        for(int i=0;i<n;i++){
-            if(!visited[i] && arrPos[i].second!=i){
-                int cycles = 0;
-                int j = i;
-                while(!visited[j]){
-                    visited[j] = true;
-                    j = arrPos[j].second;
-                    cycles ++;
-                }
-                if(cycles>0){
-                    swaps += (cycles-1);
-                }
-            }
-        }
-        return swaps;
-    }
-    int solveBT(TreeNode* root){
-        int swaps = 0;
-        queue<pair<TreeNode*,int>> q;
-        q.push({root,0});
-        vector<int> nodes;
-        int prevLevel = 0;
-        while(!q.empty()){
-            TreeNode* temp = q.front().first;
-            int nextLevel = q.front().second+1;
-            q.pop();
-            if(nextLevel>prevLevel){
-                swaps+= countMinSwaps(nodes);
-                nodes = {};
-            }
-            prevLevel = nextLevel;
-            if(temp->left != NULL){
-                q.push({temp->left,nextLevel});
-                nodes.push_back(temp->left->val);
-            }
-            if(temp->right != NULL){
-                q.push({temp->right,nextLevel});
-                nodes.push_back(temp->right->val);
-            }
-        }
-        return swaps;
-    }
     int minimumOperations(TreeNode* root) {
-        return solveBT(root);
+        queue<TreeNode*> q;
+        q.push(root);
+        int res = 0;
+        while(!q.empty()){
+            int size = q.size();
+            int n = size;
+            vector<int> nodes;
+            while(size--){
+                auto node = q.front();
+                q.pop();
+                nodes.push_back(node->val);
+                if(node->left) q.push(node->left);
+                if(node->right) q.push(node->right);
+            }
+            unordered_map<int,int> mpp;
+            for(int i=0;i<n;i++){
+                mpp[nodes[i]] = i;
+            }
+            vector<int> sortedVec(nodes.begin(), nodes.end());
+            sort(sortedVec.begin(), sortedVec.end());
+            int swaps = 0;
+            for(int i=0;i<n;i++){
+                if(nodes[i]!=sortedVec[i]){
+                    int j = mpp[sortedVec[i]];
+                    mpp[nodes[i]] = j;
+                    mpp[sortedVec[i]] = i;
+                    swap(nodes[i], nodes[j]);
+                    swaps++;
+                }
+            }
+            res += swaps;
+        }
+        return res;
     }
 };
+
 
 static const int KDS = []() {
     std::ios::sync_with_stdio(false);
