@@ -6,22 +6,29 @@ const int mod = 1e9+7;
 
 class Solution {
 public:
-    void backtrack(vector<int>& candidates, int target,vector<vector<int>>& res,vector<int> temp ,int start){
-        if(target == 0) res.push_back(temp);
+    vector<vector<int>> res;
+    void solve(vector<int>& candidates, int target, int start, vector<int>& temp){
+        if(target==0){ 
+            res.push_back(temp);
+            return;
+        }
         for(int i=start;i<candidates.size();i++){
-            if(candidates[i]>target) break;
-            if(i>start && candidates[i]==candidates[i-1]) continue;
+            // filtering to prevent same element used twice at same recusrion level twice
+            if(i>start && candidates[i-1]==candidates[i]) continue;
+            
+            // preventing additional recursions;
+            if(target-candidates[i]<0) break;
+            
+            // backtracking and recursion
             temp.push_back(candidates[i]);
-            backtrack(candidates,target-candidates[i],res,temp,i+1);
+            solve(candidates, target-candidates[i], i+1, temp);
             temp.pop_back();
         }
     }
     vector<vector<int>> combinationSum2(vector<int>& candidates, int target) {
         sort(candidates.begin(),candidates.end());
-        int current_sum = 0;
-        vector<vector<int>> res;
         vector<int> temp;
-        backtrack(candidates,target,res,temp,0);
+        solve(candidates, target, 0, temp);
         return res;
     }
 };

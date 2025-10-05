@@ -7,19 +7,18 @@ const int mod = 1e9+7;
 class Solution {
 public:
     int findDuplicate(vector<int>& nums) {
-        int hare = nums[0];//fast
-        int tortoise = nums[0];//slow
+        int slow = nums[0];
+        int fast = nums[0];
         do{
-            hare = nums[nums[hare]];
-            tortoise = nums[tortoise];
-        }while(hare != tortoise);
-
-        tortoise = nums[0];//slow
-        while(hare != tortoise){
-            tortoise = nums[tortoise];
-            hare = nums[hare];
+            fast = nums[nums[fast]];
+            slow = nums[slow];
+        }while(slow!=fast);
+        int p = nums[0];
+        while(p!=slow){
+            p = nums[p];
+            slow = nums[slow];
         }
-        return hare;
+        return slow;
     }
 };
 

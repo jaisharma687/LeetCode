@@ -6,39 +6,54 @@ const int mod = 1e9+7;
 
 class Solution {
 public:
-    void bfs(vector<vector<char>> &grid, int r, int c,vector<vector<bool>> &visit){
+    vector<pair<int,int>> dir = {{1,0},{-1,0},{0,1},{0,-1}};
+
+    void dfs(vector<vector<char>>& grid, int x, int y, int m, int n){
+        if(grid[x][y]=='0') return;
+        grid[x][y] = '0';
+        for(auto& d: dir){
+            int dx = x + d.first;
+            int dy = y + d.second;
+            if(dx>=0 && dy>=0 && dx<m && dy<n && grid[dx][dy]=='1'){
+                dfs(grid, dx, dy, m, n);
+            }
+        }
+    }
+
+    void bfs(vector<vector<char>>& grid, int x, int y, int m, int n){
         queue<pair<int,int>> q;
-        q.push({r,c});
+        q.push({x,y});
+        grid[x][y] = '0';
         while(!q.empty()){
-            pair<int,int> p = q.front();
+            auto pos = q.front();
             q.pop();
-            int row = p.first;
-            int col = p.second;
-            vector<pair<int,int>> dir = {{1,0},{-1,0},{0,1},{0,-1}};
-            for(auto x:dir){
-                int dr = row + x.first;
-                int dc = col + x.second;
-                if(dr>=0 && dr<grid.size() && dc>=0 && dc<grid[0].size() && grid[dr][dc]=='1' && visit[dr][dc]==false){
-                    visit[dr][dc] = true;
-                    q.push({dr,dc});
+            int rx = pos.first;
+            int ry = pos.second;
+            for(auto& d: dir){
+                int dx = rx + d.first;
+                int dy = ry + d.second;
+                if(dx>=0 && dy>=0 && dx<m && dy<n && grid[dx][dy]=='1'){
+                    grid[dx][dy] = '0';
+                    q.push({dx,dy});
                 }
             }
         }
     }
+
     int numIslands(vector<vector<char>>& grid) {
-        int islands = 0;
-        int rows = grid.size();
-        int cols = grid[0].size();
-        vector<vector<bool>> visit(rows,vector<bool>(cols,false));
-        for(int r=0;r<rows;r++){
-            for(int c=0;c<cols;c++){
-                if(grid[r][c] == '1' && visit[r][c]==false){
-                    bfs(grid,r,c,visit);
-                    islands++;
+        int m = grid.size();
+        int n = grid[0].size();
+        int count = 0;
+        for(int x=0;x<m;x++){
+            for(int y=0;y<n;y++){
+                if(grid[x][y]=='1'){
+                    bfs(grid, x, y, m, n);
+                    // dfs(grid, x, y, m, n);
+                    count++;
                 }
             }
         }
-        return islands;
+        return count;
     }
 };
 

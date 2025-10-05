@@ -32,6 +32,31 @@ public:
     }
 };
 
+class Solution {
+public:
+    int search(vector<int>& nums, int target) {
+        int n = nums.size();
+        int l = 0;
+        int r = n-1;
+        while(l<=r){
+            int mid = l + (r-l)/2;
+            if(nums[mid]<nums[0]) r = mid-1;
+            else l = mid+1;
+        }
+        int pivot = l;
+        l = 0;
+        r = n-1;
+        while(l<=r){
+            int mid = l+(r-l)/2;
+            int realMid = (mid+pivot)%n;
+            if(nums[realMid]==target) return realMid;
+            else if(nums[realMid]>target) r = mid-1;
+            else l = mid+1;
+        }
+        return -1;
+    }
+};
+
 static const int KDS = []() {
     std::ios::sync_with_stdio(false);
     std::cin.tie(nullptr);
